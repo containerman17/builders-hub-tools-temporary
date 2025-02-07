@@ -38,14 +38,14 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Build
-        run: yarn build
+        run: yarn build:demo
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload dist folder
-          path: "./dist"
+          # Upload dist-demo folder instead of dist
+          path: "./dist-demo"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
