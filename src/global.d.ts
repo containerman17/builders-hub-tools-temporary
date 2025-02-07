@@ -7,7 +7,7 @@ declare global {
               method: string;
               params?: any[];
               id?: number;
-          }) => Promise<string[]>;
+          }) => Promise<any>;
       }
     }
   }

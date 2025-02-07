@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
+import { Button } from "./Button";
+import { ErrorBoundary, useErrorBoundary } from "react-error-boundary";
+
 
 export const ConnectWallet = ({ children }: { children: React.ReactNode }) => {
     const [isConnected, setIsConnected] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
     const [hasWallet, setHasWallet] = useState<boolean>(false);
     const [address, setAddress] = useState<string>("");
+    const [isLoaded, setIsLoaded] = useState<boolean>(false);
+    const { showBoundary } = useErrorBoundary();
+
 
     useEffect(() => {
         setHasWallet(!!window.avalanche);
@@ -15,12 +20,13 @@ export const ConnectWallet = ({ children }: { children: React.ReactNode }) => {
             const accounts = await window.avalanche?.request({
                 method: "eth_requestAccounts",
             });
-            if (accounts?.[0]) {
-                setAddress(accounts[0]);
-                setIsConnected(true);
+            if (!accounts?.[0]) {
+                throw new Error("No accounts found");
             }
+            setAddress(accounts[0]);
+            setIsConnected(true);
         } catch (error) {
-            setError((error as Error).message || "Unknown error");
+            showBoundary(error as Error);
         }
     }
 
@@ -37,8 +43,10 @@ export const ConnectWallet = ({ children }: { children: React.ReactNode }) => {
                 setIsConnected(false);
             }
         }).catch((error) => {
+            // We can still log errors here, but no need to set localError for initial connection check
             console.log(`ConnectWallet:Error connecting to wallet: ${error}`);
-            setError((error as Error).message || "Unknown error");
+        }).finally(() => {
+            setIsLoaded(true);
         });
     }, []);
 
@@ -50,40 +58,34 @@ export const ConnectWallet = ({ children }: { children: React.ReactNode }) => {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    <button className="bg-blue-500 hover:bg-blue-600 text-white py-1.5 px-3 rounded transition-colors cursor-pointer">
-                        Download Core Wallet
-                    </button>
+                    <Button>Download Core Wallet</Button>
                 </a>
             </div>
         );
     }
 
-    if (!isConnected) {
+    if (!isConnected && isLoaded) {
         return (
             <div className="space-y-2">
-                <button
-                    onClick={connectWallet}
-                    className="bg-blue-500 hover:bg-blue-600 text-white py-1.5 px-3 rounded transition-colors cursor-pointer"
-                >
+                <Button onClick={connectWallet}>
                     Connect Wallet
-                </button>
-                {error && (
-                    <div className="text-red-500 text-sm">
-                        {error}
-                    </div>
-                )}
+                </Button>
             </div>
         );
     }
 
+    if (!isLoaded) {
+        return null;
+    }
+
     return (
-        <div className="space-y-4">
+        <div className={`space-y-4 transition `}>
             <div className="border border-blue-200 rounded p-3 flex justify-between items-center">
-                <div className="text-blue-800 ">
+                <div className="text-blue-800">
                     Connected to <span className="font-mono">{address}</span>
                 </div>
             </div>
             {children}
         </div>
     );
-}; 
+};

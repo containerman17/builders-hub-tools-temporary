@@ -1,10 +1,26 @@
 import { useState } from 'react';
 import { GetPChainAddress } from '../examples/GetPChainAddress';
+import { Button } from '../examples/utils/Button';
+import { ErrorBoundary } from "react-error-boundary";
+import { ConnectWallet } from '../examples/utils/ConnectWallet';
 
-// Define your components here - you can import more as needed
 const components = {
     "Get P-chain Address": GetPChainAddress
     // ... add other components here
+};
+
+
+const ErrorFallback = ({ error, resetErrorBoundary }: { error: Error, resetErrorBoundary: () => void }) => {
+    return (
+        <div className="space-y-2">
+            <div className="text-red-500 text-sm">
+                {error.message}
+            </div>
+            <Button onClick={resetErrorBoundary}>
+                Try Again
+            </Button>
+        </div>
+    );
 };
 
 const componentList = Object.keys(components);
@@ -19,7 +35,20 @@ function App() {
     const renderSelectedComponent = () => {
         const Component = components[selectedComponent as keyof typeof components];
         if (Component) {
-            return <Component />; // Or pass props as needed
+            return <>
+                <ErrorBoundary
+                    FallbackComponent={ErrorFallback}
+                    onReset={() => {
+                        window.location.reload();
+                    }}
+                >
+                    <ConnectWallet>
+                        <div className="space-y-4 p-4 border border-gray-200 rounded shadow-sm">
+                            <Component />
+                        </div>
+                    </ConnectWallet>
+                </ErrorBoundary>
+            </>
         }
         return <div>Component not found</div>; // Handle case where component is not found
     };
