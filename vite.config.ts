@@ -9,6 +9,9 @@ export default defineConfig(({ command, mode }) => {
   const isLibrary = mode === 'library'
   
   return {
+    // Add base configuration for GitHub Pages
+    base: process.env.GITHUB_REPOSITORY ? 
+      `/${process.env.GITHUB_REPOSITORY.split('/')[1]}/` : '/',
     plugins: [
       tailwindcss(),
       react(),
