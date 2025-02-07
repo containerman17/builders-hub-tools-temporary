@@ -5,7 +5,6 @@ import {
 } from "@avalabs/avalanchejs";
 import { Buffer as BufferPolyfill } from "buffer";
 import { SigningKey } from 'ethers';
-import { ConnectWallet } from "./utils/ConnectWallet";
 import { useState } from "react";
 import { useErrorBoundary } from "react-error-boundary";
 import { Button } from "./utils/Button";

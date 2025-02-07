@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "./Button";
-import { ErrorBoundary, useErrorBoundary } from "react-error-boundary";
+import { useErrorBoundary } from "react-error-boundary";
 
 
 export const ConnectWallet = ({ children }: { children: React.ReactNode }) => {
