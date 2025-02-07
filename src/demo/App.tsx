@@ -46,6 +46,9 @@ function App() {
                         <div className="space-y-4 p-4 border border-gray-200 rounded shadow-sm">
                             <Component />
                         </div>
+                        <div>
+                            <iframe frameBorder="0" scrolling="no" style={{ width: "100%", height: "557px" }} src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fcontainerman17%2Fbuilders-hub-tools-temporary%2Fblob%2Fmain%2Fsrc%2Fexamples%2FGetPChainAddress.tsx&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&fetchFromJsDelivr=on&maxHeight=500"></iframe>
+                        </div>
                     </ConnectWallet>
                 </ErrorBoundary>
             </>
