@@ -1,13 +1,11 @@
-import { Button } from './ui/Button';
+import { Button, GithubEmbed, ConnectWallet } from "./ui";
 import { ErrorBoundary } from "react-error-boundary";
-import { ConnectWallet } from './ui/ConnectWallet';
 import { CreateSubnet } from './examples/L1/CreateSubnet';
 import { useExampleStore } from './utils/store';
 import { CreateChain } from './examples/L1/CreateChain';
 import { ConvertToL1 } from './examples/L1/ConvertToL1';
 import { GetPChainAddress } from './examples/Wallet/GetPChainAddress';
 import { ConvertL1Signatures } from './examples/L1/ConvertL1Signatures';
-import { GithubEmbed } from './ui/GithubEmbed';
 import { RefreshCw } from 'lucide-react';
 
 const componentGroups = {

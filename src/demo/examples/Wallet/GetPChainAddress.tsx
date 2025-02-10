@@ -7,7 +7,7 @@ import { Buffer as BufferPolyfill } from "buffer";
 import { SigningKey } from 'ethers';
 import { useEffect, useState } from "react";
 import { useErrorBoundary } from "react-error-boundary";
-import { Button } from "../../ui/Button";
+import { Button } from "../../ui";
 import { useExampleStore } from "../../utils/store";
 
 export const GetPChainAddress = () => {

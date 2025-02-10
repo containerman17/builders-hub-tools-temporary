@@ -1,12 +1,10 @@
 import { utils, Context } from "@avalabs/avalanchejs";
 import { pvm } from "@avalabs/avalanchejs";
-import { bytesToHex } from '@noble/hashes/utils';
 import { getRPCEndpoint } from "../../utils/rpcEndpoint";
 import { useExampleStore } from "../../utils/store";
-import { Button } from "../../ui/Button";
+import { Button, Input } from "../../ui";
 import { useErrorBoundary } from "react-error-boundary";
 import { useState } from "react";
-import { Input } from "../../ui/Input";
 
 export const CreateSubnet = () => {
   const { showBoundary } = useErrorBoundary();
@@ -37,7 +35,7 @@ export const CreateSubnet = () => {
       const txID = await window.avalanche!.request({
         method: 'avalanche_sendTransaction',
         params: {
-          transactionHex: bytesToHex(tx.toBytes()),
+          transactionHex: utils.bufferToHex(tx.toBytes()),
           chainAlias: 'P',
         }
       }) as string;

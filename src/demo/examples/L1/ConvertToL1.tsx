@@ -1,12 +1,9 @@
-import { bytesToHex, hexToBytes } from '@noble/hashes/utils';
 import { getRPCEndpoint } from "../../utils/rpcEndpoint";
 import { useExampleStore } from "../../utils/store";
-import { Button } from "../../ui/Button";
 import { useErrorBoundary } from "react-error-boundary";
 import { useState } from "react";
-import { Input } from "../../ui/Input";
 import { utils, pvm, Context, L1Validator, pvmSerial, PChainOwner } from "@avalabs/avalanchejs";
-import { InputArray } from "../../ui/InputArray";
+import { Button, Input, InputArray } from "../../ui";
 
 export const ConvertToL1 = () => {
     const { showBoundary } = useErrorBoundary();
@@ -59,7 +56,7 @@ export const ConvertToL1 = () => {
                 );
             });
 
-            const managerAddressBytes = hexToBytes(managerAddress.replace('0x', ''));
+            const managerAddressBytes = utils.hexToBuffer(managerAddress.replace('0x', ''));
 
             const tx = pvm.e.newConvertSubnetToL1Tx(
                 {
@@ -78,7 +75,7 @@ export const ConvertToL1 = () => {
             const transactionID = await window.avalanche!.request({
                 method: 'avalanche_sendTransaction',
                 params: {
-                    transactionHex: bytesToHex(tx.toBytes()),
+                    transactionHex: utils.bufferToHex(tx.toBytes()),
                     chainAlias: 'P',
                 }
             }) as string;

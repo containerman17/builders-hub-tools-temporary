@@ -1,12 +1,10 @@
 import { utils, Context } from "@avalabs/avalanchejs";
 import { pvm } from "@avalabs/avalanchejs";
-import { bytesToHex } from '@noble/hashes/utils';
 import { getRPCEndpoint } from "../../utils/rpcEndpoint";
 import { initialState, useExampleStore } from "../../utils/store";
-import { Button } from "../../ui/Button";
 import { useErrorBoundary } from "react-error-boundary";
 import { useState } from "react";
-import { Input } from "../../ui/Input";
+import { Button, Input } from "../../ui";
 
 export const CreateChain = () => {
     const { showBoundary } = useErrorBoundary();
@@ -55,7 +53,7 @@ export const CreateChain = () => {
             const txID = await window.avalanche!.request({
                 method: 'avalanche_sendTransaction',
                 params: {
-                    transactionHex: bytesToHex(tx.toBytes()),
+                    transactionHex: utils.bufferToHex(tx.toBytes()),
                     chainAlias: 'P',
                 }
             }) as string;

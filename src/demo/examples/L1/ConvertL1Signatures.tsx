@@ -1,11 +1,9 @@
 import { useExampleStore } from "../../utils/store";
-import { Button } from "../../ui/Button";
 import { useErrorBoundary } from "react-error-boundary";
 import { useState } from "react";
-import { Input } from "../../ui/Input";
-import { InputArray } from "../../ui/InputArray";
 import { packL1ConversionMessage, PackL1ConversionMessageArgs } from "./convertWarp";
 import { utils } from "@avalabs/avalanchejs";
+import { Button, Input, InputArray } from "../../ui";
 
 export const ConvertL1Signatures = () => {
     const { showBoundary } = useErrorBoundary();
