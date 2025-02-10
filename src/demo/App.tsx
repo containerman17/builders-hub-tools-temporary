@@ -7,6 +7,7 @@ import { CreateChain } from './examples/L1/CreateChain';
 import { ConvertToL1 } from './examples/L1/ConvertToL1';
 import { GetPChainAddress } from './examples/Wallet/GetPChainAddress';
 import { ConvertL1Signatures } from './examples/L1/ConvertL1Signatures';
+import { GithubEmbed } from './ui/GithubEmbed';
 
 const componentGroups = {
     "Wallet": [
@@ -14,7 +15,7 @@ const componentGroups = {
             id: 'getPChainAddress',
             label: "Get P-chain Address",
             component: GetPChainAddress,
-            fileName: "GetPChainAddress.tsx"
+            fileNames: ["src/demo/examples/Wallet/GetPChainAddress.tsx"]
         }
     ],
     'Create an L1': [
@@ -22,25 +23,25 @@ const componentGroups = {
             id: 'createSubnet',
             label: "Create Subnet",
             component: CreateSubnet,
-            fileName: "CreateSubnet.tsx"
+            fileNames: ["src/demo/examples/L1/CreateSubnet.tsx"]
         },
         {
             id: 'createChain',
             label: "Create Chain",
             component: CreateChain,
-            fileName: "CreateChain.tsx"
+            fileNames: ["src/demo/examples/L1/CreateChain.tsx"]
         },
         {
             id: 'convertToL1',
             label: "Convert to L1",
             component: ConvertToL1,
-            fileName: "ConvertToL1.tsx"
+            fileNames: ["src/demo/examples/L1/ConvertToL1.tsx"]
         },
         {
             id: 'convertL1Signatures',
             label: "Convert L1 Signatures",
             component: ConvertL1Signatures,
-            fileName: "ConvertL1Signatures.tsx"
+            fileNames: ["src/demo/examples/L1/ConvertL1Signatures.tsx", "src/demo/examples/L1/convertWarp.ts"]
         }
     ]
 };
@@ -79,11 +80,20 @@ function App() {
                 }}
             >
                 <ConnectWallet>
-                    <div className="space-y-4 ">
+                    <div className="space-y-4">
                         <comp.component />
                     </div>
-                    <div>
-                        <iframe frameBorder="0" scrolling="no" style={{ width: "100%", height: "557px" }} src={`https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fcontainerman17%2Fbuilders-hub-tools-temporary%2Fblob%2Fmain%2Fsrc%2Fexamples%2F${comp.fileName}&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&fetchFromJsDelivr=on&maxHeight=500`}></iframe>
+                    <div className="overflow-x-hidden">
+                        {comp.fileNames.map((fileName, index) => (
+                            <GithubEmbed
+                                key={index}
+                                user="containerman17"
+                                repo="builders-hub-tools-temporary"
+                                filePath={fileName}
+                                lang="TS"
+                                maxHeight={400}
+                            />
+                        ))}
                     </div>
                 </ConnectWallet>
             </ErrorBoundary>
@@ -92,7 +102,7 @@ function App() {
 
     return (
         <div className="container mx-auto max-w-screen-lg flex h-screen">
-            <div className="w-64 p-6">
+            <div className="w-64 flex-shrink-0 p-6">
                 <h2 className="text-lg font-semibold mb-4">Examples</h2>
                 <ul>
                     {Object.entries(componentGroups).map(([groupName, components]) => (
@@ -127,7 +137,7 @@ function App() {
                     </Button>
                 </div>
             </div>
-            <div className="flex-1 p-6">
+            <div className="flex-1 p-6 min-w-0">
                 {renderSelectedComponent()}
             </div>
         </div>

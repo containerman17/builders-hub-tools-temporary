@@ -12,45 +12,36 @@ import { useExampleStore } from "../../utils/store";
 
 export const GetPChainAddress = () => {
   const { showBoundary } = useErrorBoundary();
-  const {
-    xpPublicKey,
-    evmPublicKey,
-    setXpPublicKey,
-    setEvmPublicKey,
-    networkID,
-    setNetworkID,
-    pChainAddress,
-    setPChainAddress
-  } = useExampleStore();
+  const store = useExampleStore();
 
   async function fetchPubKeys() {
     try {
       const pubkeys = await window.avalanche!.request({
         method: "avalanche_getAccountPubKey",
       }) as { xp: string, evm: string };
-      setXpPublicKey(pubkeys.xp);
-      setEvmPublicKey(pubkeys.evm);
+      store.setXpPublicKey(pubkeys.xp);
+      store.setEvmPublicKey(pubkeys.evm);
     } catch (error) {
       showBoundary(error as Error);
     }
   }
 
   useEffect(() => {
-    if (!xpPublicKey) {
-      setPChainAddress("");
+    if (!store.xpPublicKey) {
+      store.setPChainAddress("");
       return;
     }
 
-    const compressed = SigningKey.computePublicKey(`0x${xpPublicKey}`, true).slice(2);
+    const compressed = SigningKey.computePublicKey(`0x${store.xpPublicKey}`, true).slice(2);
     const pubComp = BufferPolyfill.from(compressed, "hex");
     const address = secp256k1.publicKeyBytesToAddress(pubComp);
-    setPChainAddress(utils.format("P", networkIDs.getHRP(networkID), address));
-  }, [xpPublicKey, networkID, setPChainAddress]);
+    store.setPChainAddress(utils.format("P", networkIDs.getHRP(store.networkID), address));
+  }, [store.xpPublicKey, store.networkID]);
 
   return (
     <>
       <h2 className="text-lg font-semibold text-gray-800">Get P-Chain Address</h2>
-      {!xpPublicKey && !evmPublicKey && <div>
+      {!store.xpPublicKey && !store.evmPublicKey && <div>
         <Button onClick={fetchPubKeys} type="primary">Call avalanche_getAccountPubKey</Button>
       </div>}
       <div className="space-y-2">
@@ -58,16 +49,16 @@ export const GetPChainAddress = () => {
           <span className="w-36 inline-block">
             XP Public Key:
           </span>
-          <span className="font-mono max-w-[400px] inline-block truncate align-bottom" title={xpPublicKey}>
-            {xpPublicKey}
+          <span className="font-mono max-w-[400px] inline-block truncate align-bottom" title={store.xpPublicKey}>
+            {store.xpPublicKey}
           </span>
         </p>
         <p className="text-gray-700">
           <span className="w-36 inline-block">
             EVM Public Key:
           </span>
-          <span className="font-mono max-w-[400px] inline-block truncate align-bottom" title={evmPublicKey}>
-            {evmPublicKey}
+          <span className="font-mono max-w-[400px] inline-block truncate align-bottom" title={store.evmPublicKey}>
+            {store.evmPublicKey}
           </span>
         </p>
       </div>
@@ -78,8 +69,8 @@ export const GetPChainAddress = () => {
           </span>
           <select
             id="network-select"
-            value={networkID}
-            onChange={(e) => setNetworkID(Number(e.target.value))}
+            value={store.networkID}
+            onChange={(e) => store.setNetworkID(Number(e.target.value))}
             className="border border-gray-300 rounded py-1 px-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value={networkIDs.FujiID}>Fuji</option>
@@ -89,7 +80,7 @@ export const GetPChainAddress = () => {
       </div>
       <div className="mt-4 p-4 bg-gray-100 rounded-lg">
         <p className="text-gray-700 font-semibold">P-Chain Address:</p>
-        <p className="font-mono text-lg break-all">{pChainAddress || "Request public keys to see address"}</p>
+        <p className="font-mono text-lg break-all">{store.pChainAddress || "Request public keys to see address"}</p>
       </div>
     </>
   );
