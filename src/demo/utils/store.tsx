@@ -16,6 +16,7 @@ export const initialState = {
     nodePopJsons: [""] as string[],
     managerAddress: "0xfacade0000000000000000000000000000000000",
     L1ID: "",
+    L1ConversionSignature: "",
 }
 
 export const useExampleStore = create(
@@ -34,6 +35,8 @@ export const useExampleStore = create(
             setNodePopJsons: (nodePopJsons: string[]) => set({ nodePopJsons }),
             setManagerAddress: (managerAddress: string) => set({ managerAddress }),
             setL1ID: (L1ID: string) => set({ L1ID }),
+            setL1ConversionSignature: (L1ConversionSignature: string) => set({ L1ConversionSignature }),
+
             reset: () => set(initialState),
         })),
         {
