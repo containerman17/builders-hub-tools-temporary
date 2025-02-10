@@ -19,6 +19,10 @@ export const initialState = {
     L1ConversionSignature: "",
     validatorMessagesLibAddress: "",
     walletChainId: 0,
+    evmChainName: "My L1",
+    evmChainRpcUrl: "",
+    evmChainCoinName: "COIN",
+    poaValidatorManagerAddress: "",
 }
 
 export const useExampleStore = create(
@@ -40,7 +44,10 @@ export const useExampleStore = create(
             setL1ConversionSignature: (L1ConversionSignature: string) => set({ L1ConversionSignature }),
             setValidatorMessagesLibAddress: (validatorMessagesLibAddress: string) => set({ validatorMessagesLibAddress }),
             setWalletChainId: (walletChainId: number) => set({ walletChainId }),
-
+            setEvmChainName: (evmChainName: string) => set({ evmChainName }),
+            setEvmChainRpcUrl: (evmChainRpcUrl: string) => set({ evmChainRpcUrl }),
+            setEvmChainCoinName: (evmChainCoinName: string) => set({ evmChainCoinName }),
+            setPoaValidatorManagerAddress: (poaValidatorManagerAddress: string) => set({ poaValidatorManagerAddress }),
             reset: () => set(initialState),
         })),
         {

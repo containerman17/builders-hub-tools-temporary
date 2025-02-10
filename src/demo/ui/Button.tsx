@@ -1,3 +1,5 @@
+import { LoaderCircle } from 'lucide-react';
+
 export const Button = ({
     children,
     onClick,
@@ -32,7 +34,7 @@ export const Button = ({
             {icon}
             <span>{children}</span>
             {loading && (
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current"></div>
+                <LoaderCircle className="h-4 w-4 animate-spin" />
             )}
         </button>
     );

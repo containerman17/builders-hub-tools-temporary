@@ -6,26 +6,21 @@ import { Success } from "../../ui/Success";
 import { createWalletClient, custom, createPublicClient } from 'viem';
 import ValidatorMessagesABI from "../../../../contracts/icm-contracts/compiled/ValidatorMessages.json";
 
-
-
 export const DeployValidatorMessages = () => {
     const { showBoundary } = useErrorBoundary();
     const { validatorMessagesLibAddress, setValidatorMessagesLibAddress, walletChainId } = useExampleStore();
     const [isDeploying, setIsDeploying] = useState(false);
 
     async function handleDeploy() {
-        if (!window.avalanche) {
-            throw new Error('No ethereum wallet found');
-        }
-
         setIsDeploying(true);
+        setValidatorMessagesLibAddress("");
         try {
             const publicClient = createPublicClient({
-                transport: custom(window.avalanche),
+                transport: custom(window.avalanche!),
             });
 
             const walletClient = createWalletClient({
-                transport: custom(window.avalanche),
+                transport: custom(window.avalanche!),
             });
 
             const [address] = await walletClient.requestAddresses();
@@ -35,7 +30,7 @@ export const DeployValidatorMessages = () => {
                 bytecode: ValidatorMessagesABI.bytecode.object as `0x${string}`,
                 account: address,
                 chain: {
-                    //It all doesn't matter, we are using the walletChainId to identify the L1
+                    // The values below (except for chainID) are not important since viem only checks chainID
                     id: walletChainId,
                     name: "My L1",
                     rpcUrls: {

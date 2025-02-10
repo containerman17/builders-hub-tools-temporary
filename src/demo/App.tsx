@@ -7,7 +7,9 @@ import { ConvertToL1 } from './examples/L1/ConvertToL1';
 import { GetPChainAddress } from './examples/Wallet/GetPChainAddress';
 import { ConvertL1Signatures } from './examples/L1/ConvertL1Signatures';
 import { RefreshCw } from 'lucide-react';
-import { DeployValidatorMessages } from './examples/PoA/DeployValidatorMessages';
+import { DeployValidatorMessages } from './examples/ValidatorManager/DeployValidatorMessages';
+import { SwitchChain } from "./examples/Wallet/SwitchChain";
+import { DeployValidatorManager } from "./examples/ValidatorManager/DeployValidatorManager";
 
 const componentGroups = {
     "Wallet": [
@@ -16,6 +18,12 @@ const componentGroups = {
             label: "Get P-chain Address",
             component: GetPChainAddress,
             fileNames: ["src/demo/examples/Wallet/GetPChainAddress.tsx"]
+        },
+        {
+            id: 'switchChain',
+            label: "Switch Chain",
+            component: SwitchChain,
+            fileNames: ["src/demo/examples/Wallet/SwitchChain.tsx"]
         }
     ],
     'Create an L1': [
@@ -44,43 +52,19 @@ const componentGroups = {
             fileNames: ["src/demo/examples/L1/ConvertL1Signatures.tsx", "src/demo/examples/L1/convertWarp.ts"]
         }
     ],
-    "Deploy PoA": [
+    "Deploy ValidatorManager": [
         {
             id: "deployValidatorMessages",
             label: "Validator Messages Library",
             component: DeployValidatorMessages,
-            fileNames: ["src/demo/examples/PoA/DeployValidatorMessages.tsx"]
+            fileNames: ["src/demo/examples/ValidatorManager/DeployValidatorMessages.tsx"]
         },
         {
-            id: "deployPoAValidatorManager",
-            label: "[WIP] Deploy Validator Manager",
-            component: () => <div>Will be available soon</div>,
-            fileNames: []
+            id: "deployValidatorManager",
+            label: "Deploy Validator Manager",
+            component: DeployValidatorManager,
+            fileNames: ["src/demo/examples/ValidatorManager/DeployValidatorManager.tsx"]
         },
-        {
-            id: "upgradeProxyImplementation",
-            label: "[WIP] Upgrade Proxy Implementation",
-            component: () => <div>Will be available soon</div>,
-            fileNames: []
-        },
-        {
-            id: "initializePoA",
-            label: "[WIP] Initialize PoA",
-            component: () => <div>Will be available soon</div>,
-            fileNames: []
-        },
-        {
-            id: "initializePoAValidatorSet",
-            label: "[WIP] Initialize PoA Validator Set",
-            component: () => <div>Will be available soon</div>,
-            fileNames: []
-        },
-        {
-            id: "checkContractLogs",
-            label: "[WIP] Check Contract Logs",
-            component: () => <div>Will be available soon</div>,
-            fileNames: []
-        }
     ],
     "Deploy PoS": [
 
@@ -136,7 +120,7 @@ function App() {
                                 repo="builders-hub-tools-temporary"
                                 filePath={fileName}
                                 lang="TS"
-                                maxHeight={400}
+                                maxHeight={600}
                             />
                         ))}
                     </div>
@@ -146,7 +130,7 @@ function App() {
     };
 
     return (
-        <div className="container mx-auto max-w-screen-lg flex h-screen">
+        <div className="container mx-auto max-w-screen-2xl flex h-screen">
             <div className="w-64 flex-shrink-0 p-6">
                 <ul className="space-y-6">
                     {Object.entries(componentGroups).map(([groupName, components]) => (

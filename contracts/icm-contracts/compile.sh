@@ -5,8 +5,8 @@ SCRIPT_DIR=$(dirname "$0")
 # Convert to absolute path
 SCRIPT_DIR=$(cd "$SCRIPT_DIR" && pwd)
 
-ICM_COMMIT="4d0f16e"
-SUBNET_EVM_VERSION="v0.7.0"
+ICM_COMMIT="48fe488"
+SUBNET_EVM_VERSION="v0.7.1"
 
 # Get current user and group IDs
 CURRENT_UID=$(id -u)

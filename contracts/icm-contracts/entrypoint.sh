@@ -5,8 +5,11 @@ set -eu -o pipefail
 # downlaod source code if not already present
 if [ ! -d "/teleporter_src/contracts" ]; then
     git clone https://github.com/ava-labs/icm-contracts /teleporter_src 
-    cd /teleporter_src && git submodule update --init --recursive
+    cd /teleporter_src
+    git submodule update --init --recursive
 fi
+
+git checkout $ICM_COMMIT
 
 # Add foundry to PATH
 export PATH="/root/.foundry/bin/:${PATH}"
@@ -19,9 +22,9 @@ fi
 # Build contracts
 cd /teleporter_src/contracts && forge build
 
-cd /teleporter_src/lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/contracts/proxy/transparent && forge build
+# cd /teleporter_src/lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/contracts/proxy/transparent && forge build
 # Extract and format JSON files
-for file in /teleporter_src/out/PoAValidatorManager.sol/PoAValidatorManager.json \
+for file in /teleporter_src/out/ValidatorManager.sol/ValidatorManager.json \
             /teleporter_src/out/ValidatorMessages.sol/ValidatorMessages.json \
             /teleporter_src/out/NativeTokenStakingManager.sol/NativeTokenStakingManager.json ; do
     filename=$(basename "$file")
