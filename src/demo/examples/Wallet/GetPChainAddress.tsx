@@ -5,7 +5,7 @@ import {
 } from "@avalabs/avalanchejs";
 import { Buffer as BufferPolyfill } from "buffer";
 import { SigningKey } from 'ethers';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useErrorBoundary } from "react-error-boundary";
 import { Button } from "../../ui/Button";
 import { useExampleStore } from "../../utils/store";
@@ -13,8 +13,10 @@ import { useExampleStore } from "../../utils/store";
 export const GetPChainAddress = () => {
   const { showBoundary } = useErrorBoundary();
   const store = useExampleStore();
+  const [isLoading, setIsLoading] = useState(false);
 
   async function fetchPubKeys() {
+    setIsLoading(true);
     try {
       const pubkeys = await window.avalanche!.request({
         method: "avalanche_getAccountPubKey",
@@ -23,6 +25,8 @@ export const GetPChainAddress = () => {
       store.setEvmPublicKey(pubkeys.evm);
     } catch (error) {
       showBoundary(error as Error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -42,7 +46,9 @@ export const GetPChainAddress = () => {
     <>
       <h2 className="text-lg font-semibold text-gray-800">Get P-Chain Address</h2>
       {!store.xpPublicKey && !store.evmPublicKey && <div>
-        <Button onClick={fetchPubKeys} type="primary">Call avalanche_getAccountPubKey</Button>
+        <Button onClick={fetchPubKeys} type="primary" loading={isLoading}>
+          Call avalanche_getAccountPubKey
+        </Button>
       </div>}
       <div className="space-y-2">
         <p className="text-gray-700">

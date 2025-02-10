@@ -119,9 +119,9 @@ export const CreateChain = () => {
                 <Button
                     type="primary"
                     onClick={handleCreateChain}
-                    disabled={isCreating}
+                    loading={isCreating}
                 >
-                    {isCreating ? 'Creating Chain...' : 'Create Chain'}
+                    Create Chain
                 </Button>
             </div>
             {chainID && (

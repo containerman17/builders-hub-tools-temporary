@@ -10,6 +10,7 @@ export const ConnectWallet = ({ children }: { children: React.ReactNode }) => {
     const [address, setAddress] = useState<string>("");
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
     const { showBoundary } = useErrorBoundary();
+    const [isConnecting, setIsConnecting] = useState(false);
 
 
     useEffect(() => {
@@ -17,6 +18,7 @@ export const ConnectWallet = ({ children }: { children: React.ReactNode }) => {
     }, []);
 
     async function connectWallet() {
+        setIsConnecting(true);
         try {
             const accounts = await window.avalanche?.request<string[]>({
                 method: "eth_requestAccounts",
@@ -28,6 +30,8 @@ export const ConnectWallet = ({ children }: { children: React.ReactNode }) => {
             setIsConnected(true);
         } catch (error) {
             showBoundary(error as Error);
+        } finally {
+            setIsConnecting(false);
         }
     }
 
@@ -68,7 +72,7 @@ export const ConnectWallet = ({ children }: { children: React.ReactNode }) => {
     if (!isConnected && isLoaded) {
         return (
             <div className="space-y-2">
-                <Button onClick={connectWallet} icon={<Wallet className="w-4 h-4 mr-2" />}>
+                <Button onClick={connectWallet} icon={<Wallet className="w-4 h-4 mr-2" />} loading={isConnecting}>
                     Connect Wallet
                 </Button>
             </div>
@@ -80,11 +84,16 @@ export const ConnectWallet = ({ children }: { children: React.ReactNode }) => {
     }
 
     return (
-        <div className={`space-y-4 transition `}>
-            <div className=" bg-gray-100 rounded p-3 flex justify-between items-center">
-                <div className="text-gray-800 flex items-center">
-                    <Wallet className="w-4 h-4 mr-2" />
-                    Connected to <span className="font-mono ml-1">{address}</span>
+        <div className={`space-y-4 transition`}>
+            <div className="bg-white border border-gray-200 shadow-sm rounded-lg p-3 flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                    <div className="bg-blue-50 p-2 rounded-full">
+                        <Wallet className="w-4 h-4 text-blue-600" />
+                    </div>
+                    <div>
+                        <div className="text-sm text-gray-500">Connected to</div>
+                        <div className="font-mono text-gray-900">{address}</div>
+                    </div>
                 </div>
             </div>
             {children}

@@ -8,6 +8,7 @@ import { ConvertToL1 } from './examples/L1/ConvertToL1';
 import { GetPChainAddress } from './examples/Wallet/GetPChainAddress';
 import { ConvertL1Signatures } from './examples/L1/ConvertL1Signatures';
 import { GithubEmbed } from './ui/GithubEmbed';
+import { RefreshCw } from 'lucide-react';
 
 const componentGroups = {
     "Wallet": [
@@ -132,6 +133,7 @@ function App() {
                         }}
                         className="w-full"
                         type="secondary"
+                        icon={<RefreshCw className="w-4 h-4 mr-2" />}
                     >
                         Reset State
                     </Button>

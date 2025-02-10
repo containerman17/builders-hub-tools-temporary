@@ -4,10 +4,13 @@ import { useErrorBoundary } from "react-error-boundary";
 import { useState } from "react";
 import { Input } from "../../ui/Input";
 import { InputArray } from "../../ui/InputArray";
+import { packL1ConversionMessage, PackL1ConversionMessageArgs } from "./convertWarp";
+import { utils } from "@avalabs/avalanchejs";
 
 export const ConvertL1Signatures = () => {
     const { showBoundary } = useErrorBoundary();
     const {
+        networkID,
         pChainAddress,
         subnetID,
         chainID,
@@ -17,16 +20,48 @@ export const ConvertL1Signatures = () => {
         setManagerAddress,
         nodePopJsons,
         setNodePopJsons,
-        L1ID,
-        setL1ID,
+        L1ConversionSignature,
+        setL1ConversionSignature,
     } = useExampleStore(state => state);
     const [isConverting, setIsConverting] = useState(false);
 
     async function handleConvertSignatures() {
-        setL1ID("");
+        setL1ConversionSignature("");
         setIsConverting(true);
         try {
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            const pChainChainID = '11111111111111111111111111111111LpoYY';
+
+            const conversionArgs: PackL1ConversionMessageArgs = {
+                subnetId: subnetID,
+                managerChainID: chainID,
+                managerAddress,
+                validators: nodePopJsons.map(json => JSON.parse(json).result)
+            };
+
+            const [message, justification] = packL1ConversionMessage(conversionArgs, networkID, pChainChainID);
+
+            //TODO: Has to be replaced with the glacier API
+            const signResponse = await fetch('https://signature-aggregator-fuji.fly.dev/aggregate-signatures', {
+                method: 'POST',
+                headers: {
+                    'accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: utils.bufferToHex(message),
+                    justification: utils.bufferToHex(justification),
+                    'signing-subnet-id': subnetID,
+                })
+            });
+
+            if (!signResponse.ok) {
+                const errorText = await signResponse.text();
+                throw new Error(errorText || `HTTP error! status: ${signResponse.status}`);
+            }
+
+            const respJson = await signResponse.json();
+            const signedMessage = respJson['signed-message'];
+            setL1ConversionSignature(`0x${signedMessage}`);
         } catch (error) {
             showBoundary(error);
         } finally {
@@ -90,15 +125,25 @@ export const ConvertL1Signatures = () => {
                 <Button
                     type="primary"
                     onClick={handleConvertSignatures}
-                    disabled={isConverting || !managerAddress || nodePopJsons.length === 0}
+                    disabled={!managerAddress || nodePopJsons.length === 0}
+                    loading={isConverting}
                 >
-                    {isConverting ? 'Collecting...' : 'Collect Signatures'}
+                    Collect Signatures
                 </Button>
             </div>
-            {L1ID && (
-                <div className="p-4 bg-gray-100 rounded-lg">
-                    <p className="text-gray-700 font-semibold">Transaction ID:</p>
-                    <p className="font-mono text-lg break-all">{L1ID}</p>
+            {L1ConversionSignature && (
+                <div className="p-4 bg-gray-100 rounded-lg space-y-2">
+                    <div className="flex items-center space-x-2">
+                        <p className="text-gray-700 font-semibold">Collected Signatures:</p>
+                        <div className="flex-shrink-0">
+                            <svg className="h-5 w-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div className="bg-white p-3 rounded border border-gray-200">
+                        <p className="font-mono text-sm break-all">{L1ConversionSignature}</p>
+                    </div>
                 </div>
             )}
         </div>

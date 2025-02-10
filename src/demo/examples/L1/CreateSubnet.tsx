@@ -73,10 +73,10 @@ export const CreateSubnet = () => {
         />
         <Button
           onClick={handleCreateSubnet}
-          disabled={isCreating}
+          loading={isCreating}
           type="primary"
         >
-          {isCreating ? 'Creating Subnet...' : 'Create Subnet'}
+          Create Subnet
         </Button>
       </div>
       {subnetID && (
