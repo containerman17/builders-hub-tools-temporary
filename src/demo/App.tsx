@@ -3,9 +3,17 @@ import { GetPChainAddress } from '../examples/GetPChainAddress';
 import { Button } from '../examples/utils/Button';
 import { ErrorBoundary } from "react-error-boundary";
 import { ConnectWallet } from '../examples/utils/ConnectWallet';
+import { CreateSubnet } from '../examples/CreateSubnet';
 
 const components = {
-    "Get P-chain Address": GetPChainAddress
+    "Get P-chain Address": {
+        component: GetPChainAddress,
+        fileName: "GetPChainAddress.tsx"
+    },
+    "Create Subnet": {
+        component: CreateSubnet,
+        fileName: "CreateSubnet.tsx"
+    },
     // ... add other components here
 };
 
@@ -33,27 +41,27 @@ function App() {
     };
 
     const renderSelectedComponent = () => {
-        const Component = components[selectedComponent as keyof typeof components];
-        if (Component) {
-            return <>
-                <ErrorBoundary
-                    FallbackComponent={ErrorFallback}
-                    onReset={() => {
-                        window.location.reload();
-                    }}
-                >
-                    <ConnectWallet>
-                        <div className="space-y-4 p-4 border border-gray-200 rounded shadow-sm">
-                            <Component />
-                        </div>
-                        <div>
-                            <iframe frameBorder="0" scrolling="no" style={{ width: "100%", height: "557px" }} src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fcontainerman17%2Fbuilders-hub-tools-temporary%2Fblob%2Fmain%2Fsrc%2Fexamples%2FGetPChainAddress.tsx&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&fetchFromJsDelivr=on&maxHeight=500"></iframe>
-                        </div>
-                    </ConnectWallet>
-                </ErrorBoundary>
-            </>
+        const comp = components[selectedComponent as keyof typeof components];
+        if (!comp) {
+            return <div>Component not found</div>;
         }
-        return <div>Component not found</div>; // Handle case where component is not found
+        return <>
+            <ErrorBoundary
+                FallbackComponent={ErrorFallback}
+                onReset={() => {
+                    window.location.reload();
+                }}
+            >
+                <ConnectWallet>
+                    <div className="space-y-4 p-4 border border-blue-200 rounded">
+                        <comp.component />
+                    </div>
+                    <div>
+                        <iframe frameBorder="0" scrolling="no" style={{ width: "100%", height: "557px" }} src={`https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fcontainerman17%2Fbuilders-hub-tools-temporary%2Fblob%2Fmain%2Fsrc%2Fexamples%2F${comp.fileName}&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&fetchFromJsDelivr=on&maxHeight=500`}></iframe>
+                    </div>
+                </ConnectWallet>
+            </ErrorBoundary>
+        </>
     };
 
     return (

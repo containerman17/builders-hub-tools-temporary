@@ -1,2 +1,11 @@
-
 @import "tailwindcss";
+@import 'non.geist';
+@import 'non.geist/mono';
+
+:root {
+  font-family: 'Geist Variable', system-ui, sans-serif;
+}
+
+.font-mono {
+  font-family: 'Geist Mono Variable', monospace;
+}
