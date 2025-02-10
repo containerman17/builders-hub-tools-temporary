@@ -1,12 +1,12 @@
 import { bytesToHex, hexToBytes } from '@noble/hashes/utils';
-import { getRPCEndpoint } from "../utils/rpcEndpoint";
-import { useExampleStore } from "../utils/store";
-import { Button } from "../ui/Button";
+import { getRPCEndpoint } from "../../utils/rpcEndpoint";
+import { useExampleStore } from "../../utils/store";
+import { Button } from "../../ui/Button";
 import { useErrorBoundary } from "react-error-boundary";
 import { useState } from "react";
-import { Input } from "../ui/Input";
+import { Input } from "../../ui/Input";
 import { utils, pvm, Context, L1Validator, pvmSerial, PChainOwner } from "@avalabs/avalanchejs";
-import { InputArray } from "../ui/InputArray";
+import { InputArray } from "../../ui/InputArray";
 
 export const ConvertToL1 = () => {
     const { showBoundary } = useErrorBoundary();

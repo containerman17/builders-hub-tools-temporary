@@ -1,10 +1,10 @@
 import { Button } from './ui/Button';
 import { ErrorBoundary } from "react-error-boundary";
 import { ConnectWallet } from './ui/ConnectWallet';
-import { CreateSubnet } from './examples/CreateSubnet';
+import { CreateSubnet } from './examples/L1/CreateSubnet';
 import { useExampleStore } from './utils/store';
-import { CreateChain } from './examples/CreateChain';
-import { ConvertToL1 } from './examples/ConvertToL1';
+import { CreateChain } from './examples/L1/CreateChain';
+import { ConvertToL1 } from './examples/L1/ConvertToL1';
 import { GetPChainAddress } from './examples/Wallet/GetPChainAddress';
 
 const componentGroups = {
