@@ -44,7 +44,42 @@ const componentGroups = {
         }
     ],
     "Deploy PoA": [
-
+        {
+            id: "deployValidatorMessages",
+            label: "[WIP] Deploy Validator Messages",
+            component: () => <div>Will be available soon</div>,
+            fileNames: []
+        },
+        {
+            id: "deployPoAValidatorManager",
+            label: "[WIP] Deploy Validator Manager",
+            component: () => <div>Will be available soon</div>,
+            fileNames: []
+        },
+        {
+            id: "upgradeProxyImplementation",
+            label: "[WIP] Upgrade Proxy Implementation",
+            component: () => <div>Will be available soon</div>,
+            fileNames: []
+        },
+        {
+            id: "initializePoA",
+            label: "[WIP] Initialize PoA",
+            component: () => <div>Will be available soon</div>,
+            fileNames: []
+        },
+        {
+            id: "initializePoAValidatorSet",
+            label: "[WIP] Initialize PoA Validator Set",
+            component: () => <div>Will be available soon</div>,
+            fileNames: []
+        },
+        {
+            id: "checkContractLogs",
+            label: "[WIP] Check Contract Logs",
+            component: () => <div>Will be available soon</div>,
+            fileNames: []
+        }
     ],
     "Deploy PoS": [
 
