@@ -8,7 +8,7 @@ import { ConvertToL1 } from './examples/ConvertToL1';
 import { GetPChainAddress } from './examples/Wallet/GetPChainAddress';
 
 const componentGroups = {
-    Wallet: [
+    "Wallet": [
         {
             id: 'getPChainAddress',
             label: "Get P-chain Address",
@@ -16,7 +16,7 @@ const componentGroups = {
             fileName: "GetPChainAddress.tsx"
         }
     ],
-    CreateL1: [
+    'Create an L1': [
         {
             id: 'createSubnet',
             label: "Create Subnet",
@@ -72,7 +72,7 @@ function App() {
                 }}
             >
                 <ConnectWallet>
-                    <div className="space-y-4 p-6 border border-blue-200 rounded">
+                    <div className="space-y-4 ">
                         <comp.component />
                     </div>
                     <div>
@@ -85,7 +85,7 @@ function App() {
 
     return (
         <div className="container mx-auto max-w-screen-lg flex h-screen">
-            <div className="w-64 p-6 bg-gray-100 h-full">
+            <div className="w-64 p-6">
                 <h2 className="text-lg font-semibold mb-4">Examples</h2>
                 <ul>
                     {Object.entries(componentGroups).map(([groupName, components]) => (
@@ -95,7 +95,7 @@ function App() {
                                 {components.map(({ id, label }) => (
                                     <li key={id} className="mb-2">
                                         <span
-                                            className={`cursor-pointer block hover:bg-gray-200 p-2 rounded ${selectedTool === id ? 'bg-gray-200' : ''}`}
+                                            className={`cursor-pointer block hover:bg-gray-200 p-2 rounded ${selectedTool === id ? 'bg-gray-100' : ''}`}
                                             onClick={() => handleComponentClick(id)}
                                         >
                                             {label}

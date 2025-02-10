@@ -152,7 +152,7 @@ export const ConvertToL1 = () => {
             </div>
             {L1ID && (
                 <div className="p-4 bg-gray-100 rounded-lg">
-                    <p className="text-gray-700 font-semibold">Transaction ID:</p>
+                    <p className="text-gray-700 font-semibold">L1 ID:</p>
                     <p className="font-mono text-lg break-all">{L1ID}</p>
                 </div>
             )}
