@@ -6,6 +6,8 @@
   font-family: 'Geist Variable', system-ui, sans-serif;
 }
 
-.font-mono {
+.font-mono,
+code,
+pre {
   font-family: 'Geist Mono Variable', monospace;
 }

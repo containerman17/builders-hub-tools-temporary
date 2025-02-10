@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { Button } from "./Button";
 import { useErrorBoundary } from "react-error-boundary";
 import { Wallet } from "lucide-react";
+import { useExampleStore } from "../utils/store";
 
 
 export const ConnectWallet = ({ children }: { children: React.ReactNode }) => {
+    const { walletChainId, setWalletChainId } = useExampleStore();
     const [isConnected, setIsConnected] = useState<boolean>(false);
     const [hasWallet, setHasWallet] = useState<boolean>(false);
     const [address, setAddress] = useState<string>("");
@@ -55,6 +57,24 @@ export const ConnectWallet = ({ children }: { children: React.ReactNode }) => {
         });
     }, []);
 
+    useEffect(() => {
+        // Initial chain ID check
+        window.avalanche?.request<string>({
+            method: "eth_chainId",
+        }).then((id) => {
+            setWalletChainId(parseInt(id, 16));
+        }).catch(console.error);
+
+        // Subscribe to chain changes
+        window.avalanche?.on("chainChanged", (newChainId: string) => {
+            setWalletChainId(parseInt(newChainId, 16));
+        });
+
+        return () => {
+            window.avalanche?.removeListener("chainChanged", () => { });
+        };
+    }, []);
+
     if (!hasWallet) {
         return (
             <div className="space-y-2">
@@ -95,6 +115,11 @@ export const ConnectWallet = ({ children }: { children: React.ReactNode }) => {
                         <div className="font-mono text-gray-900">{address}</div>
                     </div>
                 </div>
+                {walletChainId && (
+                    <div className="text-sm text-gray-500">
+                        Chain ID: <span className="font-mono text-gray-900">{walletChainId}</span>
+                    </div>
+                )}
             </div>
             {children}
         </div>

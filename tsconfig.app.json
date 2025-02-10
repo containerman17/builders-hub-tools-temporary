@@ -28,7 +28,8 @@
   },
   "include": [
     "src",
-    "src/index.ts"
+    "src/index.ts",
+    "contracts"
   ],
   "exclude": [
     "node_modules",

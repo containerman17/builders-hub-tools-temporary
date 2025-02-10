@@ -17,6 +17,8 @@ export const initialState = {
     managerAddress: "0xfacade0000000000000000000000000000000000",
     L1ID: "",
     L1ConversionSignature: "",
+    validatorMessagesLibAddress: "",
+    walletChainId: 0,
 }
 
 export const useExampleStore = create(
@@ -36,6 +38,8 @@ export const useExampleStore = create(
             setManagerAddress: (managerAddress: string) => set({ managerAddress }),
             setL1ID: (L1ID: string) => set({ L1ID }),
             setL1ConversionSignature: (L1ConversionSignature: string) => set({ L1ConversionSignature }),
+            setValidatorMessagesLibAddress: (validatorMessagesLibAddress: string) => set({ validatorMessagesLibAddress }),
+            setWalletChainId: (walletChainId: number) => set({ walletChainId }),
 
             reset: () => set(initialState),
         })),

@@ -7,6 +7,7 @@ import { ConvertToL1 } from './examples/L1/ConvertToL1';
 import { GetPChainAddress } from './examples/Wallet/GetPChainAddress';
 import { ConvertL1Signatures } from './examples/L1/ConvertL1Signatures';
 import { RefreshCw } from 'lucide-react';
+import { DeployValidatorMessages } from './examples/PoA/DeployValidatorMessages';
 
 const componentGroups = {
     "Wallet": [
@@ -46,9 +47,9 @@ const componentGroups = {
     "Deploy PoA": [
         {
             id: "deployValidatorMessages",
-            label: "[WIP] Deploy Validator Messages",
-            component: () => <div>Will be available soon</div>,
-            fileNames: []
+            label: "Validator Messages Library",
+            component: DeployValidatorMessages,
+            fileNames: ["src/demo/examples/PoA/DeployValidatorMessages.tsx"]
         },
         {
             id: "deployPoAValidatorManager",
