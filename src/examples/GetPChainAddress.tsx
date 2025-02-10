@@ -5,43 +5,52 @@ import {
 } from "@avalabs/avalanchejs";
 import { Buffer as BufferPolyfill } from "buffer";
 import { SigningKey } from 'ethers';
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useErrorBoundary } from "react-error-boundary";
 import { Button } from "./utils/Button";
+import { useExampleStore } from "./utils/store";
 
 export const GetPChainAddress = () => {
-  const [publicKeys, setPublicKeys] = useState<{ xp: string, evm: string }>({ xp: "", evm: "" });
   const { showBoundary } = useErrorBoundary();
-  const [networkID, setNetworkID] = useState<number>(networkIDs.FujiID);
-  const [pChainAddress, setPChainAddress] = useState<string>("");
+  const {
+    xpPublicKey,
+    evmPublicKey,
+    setXpPublicKey,
+    setEvmPublicKey,
+    networkID,
+    setNetworkID,
+    pChainAddress,
+    setPChainAddress
+  } = useExampleStore();
 
   async function fetchPubKeys() {
     try {
       const pubkeys = await window.avalanche!.request({
         method: "avalanche_getAccountPubKey",
-      });
-      setPublicKeys(pubkeys as { xp: string, evm: string });
+      }) as { xp: string, evm: string };
+      setXpPublicKey(pubkeys.xp);
+      setEvmPublicKey(pubkeys.evm);
     } catch (error) {
       showBoundary(error as Error);
     }
   }
 
   useEffect(() => {
-    if (!publicKeys.xp) {
+    if (!xpPublicKey) {
       setPChainAddress("");
       return;
     }
 
-    const compressed = SigningKey.computePublicKey(`0x${publicKeys.xp}`, true).slice(2);
+    const compressed = SigningKey.computePublicKey(`0x${xpPublicKey}`, true).slice(2);
     const pubComp = BufferPolyfill.from(compressed, "hex");
     const address = secp256k1.publicKeyBytesToAddress(pubComp);
     setPChainAddress(utils.format("P", networkIDs.getHRP(networkID), address));
-  }, [publicKeys.xp, networkID]);
+  }, [xpPublicKey, networkID, setPChainAddress]);
 
   return (
     <>
       <h2 className="text-lg font-semibold text-gray-800">Get P-Chain Address</h2>
-      {!publicKeys.xp && !publicKeys.evm && <div>
+      {!xpPublicKey && !evmPublicKey && <div>
         <Button onClick={fetchPubKeys}>Call avalanche_getAccountPubKey</Button>
       </div>}
       <div className="space-y-2">
@@ -49,16 +58,16 @@ export const GetPChainAddress = () => {
           <span className="w-36 inline-block">
             XP Public Key:
           </span>
-          <span className="font-mono max-w-[400px] inline-block truncate align-bottom" title={publicKeys.xp}>
-            {publicKeys.xp}
+          <span className="font-mono max-w-[400px] inline-block truncate align-bottom" title={xpPublicKey}>
+            {xpPublicKey}
           </span>
         </p>
         <p className="text-gray-700">
           <span className="w-36 inline-block">
             EVM Public Key:
           </span>
-          <span className="font-mono max-w-[400px] inline-block truncate align-bottom" title={publicKeys.evm}>
-            {publicKeys.evm}
+          <span className="font-mono max-w-[400px] inline-block truncate align-bottom" title={evmPublicKey}>
+            {evmPublicKey}
           </span>
         </p>
       </div>

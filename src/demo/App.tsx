@@ -4,13 +4,16 @@ import { Button } from '../examples/utils/Button';
 import { ErrorBoundary } from "react-error-boundary";
 import { ConnectWallet } from '../examples/utils/ConnectWallet';
 import { CreateSubnet } from '../examples/CreateSubnet';
+import { useExampleStore } from '../examples/utils/store';
 
 const components = {
-    "Get P-chain Address": {
+    getPChainAddress: {
+        label: "Get P-chain Address",
         component: GetPChainAddress,
         fileName: "GetPChainAddress.tsx"
     },
-    "Create Subnet": {
+    createSubnet: {
+        label: "Create Subnet",
         component: CreateSubnet,
         fileName: "CreateSubnet.tsx"
     },
@@ -31,17 +34,15 @@ const ErrorFallback = ({ error, resetErrorBoundary }: { error: Error, resetError
     );
 };
 
-const componentList = Object.keys(components);
-
 function App() {
-    const [selectedComponent, setSelectedComponent] = useState<keyof typeof components>(componentList[0] as keyof typeof components); // Initialize with the first component
+    const { selectedTool, setSelectedTool } = useExampleStore();
 
-    const handleComponentClick = (componentName: keyof typeof components) => {
-        setSelectedComponent(componentName);
+    const handleComponentClick = (toolId: string) => {
+        setSelectedTool(toolId);
     };
 
     const renderSelectedComponent = () => {
-        const comp = components[selectedComponent as keyof typeof components];
+        const comp = components[selectedTool as keyof typeof components];
         if (!comp) {
             return <div>Component not found</div>;
         }
@@ -69,18 +70,31 @@ function App() {
             <div className="w-64 p-4 bg-gray-100 h-full">
                 <h2 className="text-lg font-semibold mb-2">Examples</h2>
                 <ul>
-                    {componentList.map((componentName) => (
-                        <li key={componentName} className="mb-1">
+                    {Object.entries(components).map(([id, { label }]) => (
+                        <li key={id} className="mb-1">
                             <a
                                 href="#"
-                                className={`block hover:bg-gray-200 p-2 rounded ${selectedComponent === componentName ? 'bg-gray-200' : ''}`}
-                                onClick={() => handleComponentClick(componentName as keyof typeof components)}
+                                className={`block hover:bg-gray-200 p-2 rounded ${selectedTool === id ? 'bg-gray-200' : ''}`}
+                                onClick={() => handleComponentClick(id)}
                             >
-                                {componentName}
+                                {label}
                             </a>
                         </li>
                     ))}
                 </ul>
+                <div className="mt-4">
+                    <Button
+                        onClick={() => {
+                            if (window.confirm("Are you sure you want to reset the state?")) {
+                                useExampleStore.getState().reset();
+                            }
+                        }}
+                        className="w-full"
+                        type="secondary"
+                    >
+                        Reset State
+                    </Button>
+                </div>
             </div>
             <div className="flex-1 p-4">
                 {renderSelectedComponent()}

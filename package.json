@@ -23,7 +23,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@avalabs/avalanchejs": "4.2.0-alpha.1",
+    "@avalabs/avalanchejs": "^4.1.2-alpha.4",
     "@tailwindcss/vite": "^4.0.4",
     "buffer": "^6.0.3",
     "ethers": "^6.13.5",
@@ -31,7 +31,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-error-boundary": "^5.0.0",
-    "tailwindcss": "^4.0.4"
+    "tailwindcss": "^4.0.4",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
