@@ -44,7 +44,17 @@ const componentGroups = {
             component: ConvertL1Signatures,
             fileNames: ["src/demo/examples/L1/ConvertL1Signatures.tsx", "src/demo/examples/L1/convertWarp.ts"]
         }
-    ]
+    ],
+    "Deploy PoA": [
+
+    ],
+    "Deploy PoS": [
+
+    ],
+    "Top up a validator": [
+
+    ],
+
 };
 
 const ErrorFallback = ({ error, resetErrorBoundary }: { error: Error, resetErrorBoundary: () => void }) => {
@@ -104,20 +114,22 @@ function App() {
     return (
         <div className="container mx-auto max-w-screen-lg flex h-screen">
             <div className="w-64 flex-shrink-0 p-6">
-                <h2 className="text-lg font-semibold mb-4">Examples</h2>
-                <ul>
+                <ul className="space-y-6">
                     {Object.entries(componentGroups).map(([groupName, components]) => (
-                        <li key={groupName} className="mb-4">
-                            <h3 className="text-md font-semibold mb-2">{groupName}</h3>
-                            <ul>
+                        <li key={groupName}>
+                            <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wide mb-3">{groupName}</h3>
+                            <ul className="space-y-1">
                                 {components.map(({ id, label }) => (
-                                    <li key={id} className="mb-2">
-                                        <span
-                                            className={`cursor-pointer block hover:bg-gray-200 p-2 rounded ${selectedTool === id ? 'bg-gray-100' : ''}`}
+                                    <li key={id}>
+                                        <button
                                             onClick={() => handleComponentClick(id)}
+                                            className={`cursor-pointer w-full text-left px-3 py-2 text-sm rounded-md transition-all ${selectedTool === id
+                                                ? 'bg-blue-50 text-blue-700 font-medium'
+                                                : 'text-gray-700 hover:bg-gray-50'
+                                                }`}
                                         >
                                             {label}
-                                        </span>
+                                        </button>
                                     </li>
                                 ))}
                             </ul>
@@ -143,7 +155,7 @@ function App() {
                 {renderSelectedComponent()}
             </div>
         </div>
-    )
+    );
 }
 
 export default App
