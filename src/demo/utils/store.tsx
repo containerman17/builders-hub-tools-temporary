@@ -13,6 +13,9 @@ export const initialState = {
     vmId: "srEXiWaHuhNyGwPUi444Tu47ZEDwxTWrbQiuD7FmgSAQ6X7Dy",
     genesisData: '{"hello":"world"}',
     chainID: "",
+    nodePopJsons: [""] as string[],
+    managerAddress: "0xfacade0000000000000000000000000000000000",
+    L1ID: "",
 }
 
 export const useExampleStore = create(
@@ -28,6 +31,9 @@ export const useExampleStore = create(
             setVmId: (vmId: string) => set({ vmId }),
             setGenesisData: (genesisData: string) => set({ genesisData }),
             setChainID: (chainID: string) => set({ chainID }),
+            setNodePopJsons: (nodePopJsons: string[]) => set({ nodePopJsons }),
+            setManagerAddress: (managerAddress: string) => set({ managerAddress }),
+            setL1ID: (L1ID: string) => set({ L1ID }),
             reset: () => set(initialState),
         })),
         {

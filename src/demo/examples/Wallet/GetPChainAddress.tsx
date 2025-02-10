@@ -7,8 +7,8 @@ import { Buffer as BufferPolyfill } from "buffer";
 import { SigningKey } from 'ethers';
 import { useEffect } from "react";
 import { useErrorBoundary } from "react-error-boundary";
-import { Button } from "../ui/Button";
-import { useExampleStore } from "../utils/store";
+import { Button } from "../../ui/Button";
+import { useExampleStore } from "../../utils/store";
 
 export const GetPChainAddress = () => {
   const { showBoundary } = useErrorBoundary();
@@ -51,7 +51,7 @@ export const GetPChainAddress = () => {
     <>
       <h2 className="text-lg font-semibold text-gray-800">Get P-Chain Address</h2>
       {!xpPublicKey && !evmPublicKey && <div>
-        <Button onClick={fetchPubKeys}>Call avalanche_getAccountPubKey</Button>
+        <Button onClick={fetchPubKeys} type="primary">Call avalanche_getAccountPubKey</Button>
       </div>}
       <div className="space-y-2">
         <p className="text-gray-700">

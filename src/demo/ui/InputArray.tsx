@@ -1,50 +1,79 @@
-import { FC } from 'react'
+import { Input } from "./Input";
+import { Button } from "./Button";
+import { X } from "lucide-react";
 
-interface InputArrayProps {
-    values: string[]
-    onChange: (values: string[]) => void
-}
-
-export const InputArray: FC<InputArrayProps> = ({ values, onChange }) => {
-    const handleChange = (index: number, value: string) => {
-        const newValues = [...values]
-        newValues[index] = value
-        onChange(newValues)
-    }
-
+export const InputArray = ({
+    label,
+    values,
+    onChange,
+    placeholder,
+    notesUnderInput,
+    type = "text",
+    rows,
+    disabled,
+}: {
+    label: string,
+    values: string[],
+    onChange: (values: string[]) => void,
+    placeholder?: string,
+    notesUnderInput?: string,
+    type?: string,
+    rows?: number,
+    disabled?: boolean,
+}) => {
     const handleAdd = () => {
-        onChange([...values, ''])
-    }
+        onChange([...values, ""]);
+    };
 
     const handleRemove = (index: number) => {
-        const newValues = values.filter((_, i) => i !== index)
-        onChange(newValues)
-    }
+        onChange(values.filter((_, i) => i !== index));
+    };
+
+    const handleChange = (index: number, value: string) => {
+        const newValues = [...values];
+        newValues[index] = value;
+        onChange(newValues);
+    };
 
     return (
         <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+                {label}
+            </label>
             {values.map((value, index) => (
                 <div key={index} className="flex gap-2">
-                    <input
-                        type="text"
-                        value={value}
-                        onChange={(e) => handleChange(index, e.target.value)}
-                        className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                    />
-                    <button
-                        onClick={() => handleRemove(index)}
-                        className="rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50"
-                    >
-                        Remove
-                    </button>
+                    <div className="flex-grow relative">
+                        <Input
+                            label={`Entry ${index + 1}`}
+                            value={value}
+                            onChange={(newValue) => handleChange(index, newValue)}
+                            placeholder={placeholder}
+                            notesUnderInput={index === 0 ? notesUnderInput : undefined}
+                            type={type}
+                            rows={rows}
+                            disabled={disabled}
+                        />
+                        <button
+                            onClick={() => handleRemove(index)}
+                            disabled={disabled}
+                            className="absolute top-9 right-2 p-1 text-gray-400 hover:text-gray-600 disabled:text-gray-300"
+                        >
+                            <X size={16} />
+                        </button>
+                    </div>
                 </div>
             ))}
-            <button
+            {values.length === 0 && (
+                <p className="text-sm text-gray-500 italic">No entries yet. Click "Add Entry" to begin.</p>
+            )}
+            <Button
                 onClick={handleAdd}
-                className="rounded-md bg-blue-600 px-3 py-2 text-sm text-white hover:bg-blue-700"
+                disabled={disabled}
+                type="default"
+                className="w-full mt-2"
             >
-                Add Item
-            </button>
+                Add Entry
+            </Button>
         </div>
-    )
-}
+    );
+};

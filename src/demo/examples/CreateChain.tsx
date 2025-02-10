@@ -73,7 +73,7 @@ export const CreateChain = () => {
             <div className="space-y-4">
                 <h2 className="text-lg font-semibold text-gray-800">Create Chain</h2>
                 <div className="p-4 bg-gray-100 rounded-lg">
-                    <p className="text-gray-700">Please get your P-Chain address and create a subnet first.</p>
+                    <p className="text-gray-700">Please get your P-Chain address first</p>
                 </div>
             </div>
         );
@@ -117,6 +117,7 @@ export const CreateChain = () => {
                     placeholder="Enter genesis data in JSON format"
                 />
                 <Button
+                    type="primary"
                     onClick={handleCreateChain}
                     disabled={isCreating}
                 >

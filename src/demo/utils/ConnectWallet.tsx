@@ -17,7 +17,7 @@ export const ConnectWallet = ({ children }: { children: React.ReactNode }) => {
 
     async function connectWallet() {
         try {
-            const accounts = await window.avalanche?.request({
+            const accounts = await window.avalanche?.request<string[]>({
                 method: "eth_requestAccounts",
             });
             if (!accounts?.[0]) {
@@ -31,7 +31,7 @@ export const ConnectWallet = ({ children }: { children: React.ReactNode }) => {
     }
 
     useEffect(() => {
-        window.avalanche?.request({
+        window.avalanche?.request<string[]>({
             method: "eth_accounts",
         }).then((accounts) => {
             if (accounts.length > 0) {

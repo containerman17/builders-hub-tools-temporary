@@ -1,29 +1,42 @@
-import { GetPChainAddress } from './examples/GetPChainAddress';
 import { Button } from './ui/Button';
 import { ErrorBoundary } from "react-error-boundary";
 import { ConnectWallet } from './ui/ConnectWallet';
 import { CreateSubnet } from './examples/CreateSubnet';
 import { useExampleStore } from './utils/store';
 import { CreateChain } from './examples/CreateChain';
+import { ConvertToL1 } from './examples/ConvertToL1';
+import { GetPChainAddress } from './examples/Wallet/GetPChainAddress';
 
-const components = {
-    getPChainAddress: {
-        label: "Get P-chain Address",
-        component: GetPChainAddress,
-        fileName: "GetPChainAddress.tsx"
-    },
-    createSubnet: {
-        label: "Create Subnet",
-        component: CreateSubnet,
-        fileName: "CreateSubnet.tsx"
-    },
-    createChain: {
-        label: "Create Chain",
-        component: CreateChain,
-        fileName: "CreateChain.tsx"
-    },
+const componentGroups = {
+    Wallet: [
+        {
+            id: 'getPChainAddress',
+            label: "Get P-chain Address",
+            component: GetPChainAddress,
+            fileName: "GetPChainAddress.tsx"
+        }
+    ],
+    CreateL1: [
+        {
+            id: 'createSubnet',
+            label: "Create Subnet",
+            component: CreateSubnet,
+            fileName: "CreateSubnet.tsx"
+        },
+        {
+            id: 'createChain',
+            label: "Create Chain",
+            component: CreateChain,
+            fileName: "CreateChain.tsx"
+        },
+        {
+            id: 'convertToL1',
+            label: "Convert to L1",
+            component: ConvertToL1,
+            fileName: "ConvertToL1.tsx"
+        }
+    ]
 };
-
 
 const ErrorFallback = ({ error, resetErrorBoundary }: { error: Error, resetErrorBoundary: () => void }) => {
     return (
@@ -46,7 +59,8 @@ function App() {
     };
 
     const renderSelectedComponent = () => {
-        const comp = components[selectedTool as keyof typeof components];
+        const allComponents = Object.values(componentGroups).flat();
+        const comp = allComponents.find(c => c.id === selectedTool);
         if (!comp) {
             return <div>Component not found</div>;
         }
@@ -58,7 +72,7 @@ function App() {
                 }}
             >
                 <ConnectWallet>
-                    <div className="space-y-4 p-4 border border-blue-200 rounded">
+                    <div className="space-y-4 p-6 border border-blue-200 rounded">
                         <comp.component />
                     </div>
                     <div>
@@ -71,22 +85,28 @@ function App() {
 
     return (
         <div className="container mx-auto max-w-screen-lg flex h-screen">
-            <div className="w-64 p-4 bg-gray-100 h-full">
-                <h2 className="text-lg font-semibold mb-2">Examples</h2>
+            <div className="w-64 p-6 bg-gray-100 h-full">
+                <h2 className="text-lg font-semibold mb-4">Examples</h2>
                 <ul>
-                    {Object.entries(components).map(([id, { label }]) => (
-                        <li key={id} className="mb-1">
-                            <a
-                                href="#"
-                                className={`block hover:bg-gray-200 p-2 rounded ${selectedTool === id ? 'bg-gray-200' : ''}`}
-                                onClick={() => handleComponentClick(id)}
-                            >
-                                {label}
-                            </a>
+                    {Object.entries(componentGroups).map(([groupName, components]) => (
+                        <li key={groupName} className="mb-4">
+                            <h3 className="text-md font-semibold mb-2">{groupName}</h3>
+                            <ul>
+                                {components.map(({ id, label }) => (
+                                    <li key={id} className="mb-2">
+                                        <span
+                                            className={`cursor-pointer block hover:bg-gray-200 p-2 rounded ${selectedTool === id ? 'bg-gray-200' : ''}`}
+                                            onClick={() => handleComponentClick(id)}
+                                        >
+                                            {label}
+                                        </span>
+                                    </li>
+                                ))}
+                            </ul>
                         </li>
                     ))}
                 </ul>
-                <div className="mt-4">
+                <div className="mt-6">
                     <Button
                         onClick={() => {
                             if (window.confirm("Are you sure you want to reset the state?")) {
@@ -100,7 +120,7 @@ function App() {
                     </Button>
                 </div>
             </div>
-            <div className="flex-1 p-4">
+            <div className="flex-1 p-6">
                 {renderSelectedComponent()}
             </div>
         </div>
