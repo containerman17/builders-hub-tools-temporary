@@ -6,6 +6,7 @@ import { useExampleStore } from './utils/store';
 import { CreateChain } from './examples/L1/CreateChain';
 import { ConvertToL1 } from './examples/L1/ConvertToL1';
 import { GetPChainAddress } from './examples/Wallet/GetPChainAddress';
+import { ConvertL1Signatures } from './examples/L1/ConvertL1Signatures';
 
 const componentGroups = {
     "Wallet": [
@@ -34,6 +35,12 @@ const componentGroups = {
             label: "Convert to L1",
             component: ConvertToL1,
             fileName: "ConvertToL1.tsx"
+        },
+        {
+            id: 'convertL1Signatures',
+            label: "Convert L1 Signatures",
+            component: ConvertL1Signatures,
+            fileName: "ConvertL1Signatures.tsx"
         }
     ]
 };

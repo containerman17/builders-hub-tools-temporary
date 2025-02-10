@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "./Button";
 import { useErrorBoundary } from "react-error-boundary";
+import { Wallet } from "lucide-react";
 
 
 export const ConnectWallet = ({ children }: { children: React.ReactNode }) => {
@@ -17,7 +18,7 @@ export const ConnectWallet = ({ children }: { children: React.ReactNode }) => {
 
     async function connectWallet() {
         try {
-            const accounts = await window.avalanche?.request({
+            const accounts = await window.avalanche?.request<string[]>({
                 method: "eth_requestAccounts",
             });
             if (!accounts?.[0]) {
@@ -31,7 +32,7 @@ export const ConnectWallet = ({ children }: { children: React.ReactNode }) => {
     }
 
     useEffect(() => {
-        window.avalanche?.request({
+        window.avalanche?.request<string[]>({
             method: "eth_accounts",
         }).then((accounts) => {
             if (accounts.length > 0) {
@@ -67,7 +68,7 @@ export const ConnectWallet = ({ children }: { children: React.ReactNode }) => {
     if (!isConnected && isLoaded) {
         return (
             <div className="space-y-2">
-                <Button onClick={connectWallet}>
+                <Button onClick={connectWallet} icon={<Wallet className="w-4 h-4 mr-2" />}>
                     Connect Wallet
                 </Button>
             </div>
@@ -80,9 +81,10 @@ export const ConnectWallet = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <div className={`space-y-4 transition `}>
-            <div className="border border-blue-200 rounded p-3 flex justify-between items-center">
-                <div className="text-blue-800">
-                    Connected to <span className="font-mono">{address}</span>
+            <div className=" bg-gray-100 rounded p-3 flex justify-between items-center">
+                <div className="text-gray-800 flex items-center">
+                    <Wallet className="w-4 h-4 mr-2" />
+                    Connected to <span className="font-mono ml-1">{address}</span>
                 </div>
             </div>
             {children}

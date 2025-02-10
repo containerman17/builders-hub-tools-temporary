@@ -3,28 +3,31 @@ export const Button = ({
     onClick,
     disabled,
     className = '',
-    type = 'default'
+    type = 'default',
+    icon
 }: {
     children: React.ReactNode,
     onClick?: () => void,
     disabled?: boolean,
     className?: string,
-    type?: 'default' | 'primary' | 'secondary' | 'danger'
+    type?: 'default' | 'primary' | 'secondary' | 'danger',
+    icon?: React.ReactNode
 }) => {
     const buttonStyles = {
-        default: 'border border-gray-300 bg-white hover:bg-gray-50 text-gray-700',
-        primary: 'bg-blue-500 hover:bg-blue-600 text-white',
-        secondary: 'bg-gray-200 hover:bg-gray-300 text-gray-700',
-        danger: 'bg-red-500 hover:bg-red-600 text-white'
+        default: 'bg-white hover:bg-gray-50 border border-gray-300 text-gray-700 shadow-sm cursor-pointer   ',
+        primary: 'bg-blue-600 hover:bg-blue-700 text-white shadow-sm cursor-pointer',
+        secondary: 'bg-white hover:bg-gray-50 border border-gray-300 text-gray-700 shadow-sm cursor-pointer',
+        danger: 'bg-red-600 hover:bg-red-700 text-white shadow-sm cursor-pointer'
     }
 
     return (
         <button
             onClick={onClick}
             disabled={disabled}
-            className={`py-1 px-3 text-sm rounded transition-colors cursor-pointer ${disabled ? 'bg-gray-400 cursor-not-allowed' : buttonStyles[type]
+            className={`py-2 px-4 text-sm font-medium rounded-md transition-all flex items-center justify-center ${disabled ? 'bg-gray-100 border border-gray-200 text-gray-400 cursor-not-allowed' : buttonStyles[type]
                 } ${className}`}
         >
+            {icon}
             {children}
         </button>
     );
