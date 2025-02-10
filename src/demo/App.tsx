@@ -1,10 +1,10 @@
-import { useState } from 'react';
 import { GetPChainAddress } from '../examples/GetPChainAddress';
 import { Button } from '../examples/utils/Button';
 import { ErrorBoundary } from "react-error-boundary";
 import { ConnectWallet } from '../examples/utils/ConnectWallet';
 import { CreateSubnet } from '../examples/CreateSubnet';
 import { useExampleStore } from '../examples/utils/store';
+import { CreateChain } from '../examples/CreateChain';
 
 const components = {
     getPChainAddress: {
@@ -17,7 +17,11 @@ const components = {
         component: CreateSubnet,
         fileName: "CreateSubnet.tsx"
     },
-    // ... add other components here
+    createChain: {
+        label: "Create Chain",
+        component: CreateChain,
+        fileName: "CreateChain.tsx"
+    },
 };
 
 
