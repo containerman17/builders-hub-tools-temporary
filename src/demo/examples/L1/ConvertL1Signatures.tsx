@@ -4,6 +4,7 @@ import { useState } from "react";
 import { packL1ConversionMessage, PackL1ConversionMessageArgs } from "./convertWarp";
 import { utils } from "@avalabs/avalanchejs";
 import { Button, Input, InputArray } from "../../ui";
+import { Success } from "../../ui/Success";
 
 export const ConvertL1Signatures = () => {
     const { showBoundary } = useErrorBoundary();
@@ -129,21 +130,10 @@ export const ConvertL1Signatures = () => {
                     Collect Signatures
                 </Button>
             </div>
-            {L1ConversionSignature && (
-                <div className="p-4 bg-gray-100 rounded-lg space-y-2">
-                    <div className="flex items-center space-x-2">
-                        <p className="text-gray-700 font-semibold">Collected Signatures:</p>
-                        <div className="flex-shrink-0">
-                            <svg className="h-5 w-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div className="bg-white p-3 rounded border border-gray-200">
-                        <p className="font-mono text-sm break-all">{L1ConversionSignature}</p>
-                    </div>
-                </div>
-            )}
+            <Success
+                label="Collected Signatures"
+                value={L1ConversionSignature}
+            />
         </div>
     );
 };

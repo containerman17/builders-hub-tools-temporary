@@ -4,6 +4,7 @@ import { useErrorBoundary } from "react-error-boundary";
 import { useState } from "react";
 import { utils, pvm, Context, L1Validator, pvmSerial, PChainOwner } from "@avalabs/avalanchejs";
 import { Button, Input, InputArray } from "../../ui";
+import { Success } from "../../ui/Success";
 
 export const ConvertToL1 = () => {
     const { showBoundary } = useErrorBoundary();
@@ -142,17 +143,16 @@ export const ConvertToL1 = () => {
                 <Button
                     type="primary"
                     onClick={handleConvertToL1}
-                    disabled={isConverting || !managerAddress || nodePopJsons.length === 0}
+                    disabled={!managerAddress || nodePopJsons.length === 0}
+                    loading={isConverting}
                 >
-                    {isConverting ? 'Converting to L1...' : 'Convert to L1'}
+                    Convert to L1
                 </Button>
             </div>
-            {L1ID && (
-                <div className="p-4 bg-gray-100 rounded-lg">
-                    <p className="text-gray-700 font-semibold">L1 ID:</p>
-                    <p className="font-mono text-lg break-all">{L1ID}</p>
-                </div>
-            )}
+            <Success
+                label="Transaction ID"
+                value={L1ID}
+            />
         </div>
     );
 };

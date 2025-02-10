@@ -5,6 +5,7 @@ import { initialState, useExampleStore } from "../../utils/store";
 import { useErrorBoundary } from "react-error-boundary";
 import { useState } from "react";
 import { Button, Input } from "../../ui";
+import { Success } from "../../ui/Success";
 
 export const CreateChain = () => {
     const { showBoundary } = useErrorBoundary();
@@ -122,12 +123,10 @@ export const CreateChain = () => {
                     Create Chain
                 </Button>
             </div>
-            {chainID && (
-                <div className="p-4 bg-gray-100 rounded-lg">
-                    <p className="text-gray-700 font-semibold">Chain ID:</p>
-                    <p className="font-mono text-lg break-all">{chainID}</p>
-                </div>
-            )}
+            <Success
+                label="Chain ID"
+                value={chainID}
+            />
         </div>
     );
 };

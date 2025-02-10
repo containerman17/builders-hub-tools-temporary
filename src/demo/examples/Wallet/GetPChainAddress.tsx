@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useErrorBoundary } from "react-error-boundary";
 import { Button } from "../../ui";
 import { useExampleStore } from "../../utils/store";
+import { Success } from "../../ui/Success";
 
 export const GetPChainAddress = () => {
   const { showBoundary } = useErrorBoundary();
@@ -84,10 +85,10 @@ export const GetPChainAddress = () => {
           </select>
         </p>
       </div>
-      <div className="mt-4 p-4 bg-gray-100 rounded-lg">
-        <p className="text-gray-700 font-semibold">P-Chain Address:</p>
-        <p className="font-mono text-lg break-all">{store.pChainAddress || "Request public keys to see address"}</p>
-      </div>
+      <Success
+        label="P-Chain Address"
+        value={store.pChainAddress}
+      />
     </>
   );
 };
