@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
 import { newAddressedCall, marshalSubnetToL1ConversionData, PackL1ConversionMessageArgs, packL1ConversionMessage, subnetToL1ConversionID, newUnsignedMessage, newSubnetToL1Conversion } from './convertWarp';
-import { cb58ToBytes } from './convertWarp';
 import { utils } from '@avalabs/avalanchejs';
 const { hexToBuffer, bufferToHex } = utils;
 
@@ -88,7 +87,7 @@ describe('L1 Conversion Tests', () => {
     });
 
     it('should create new subnet to L1 conversion', () => {
-        const subnetConversionID = cb58ToBytes("PFWYqXhRtrKGRvnSwCpxMXKa9d1pHmY8ASzu8mRCCBCb25p17");
+        const subnetConversionID = utils.base58check.decode("PFWYqXhRtrKGRvnSwCpxMXKa9d1pHmY8ASzu8mRCCBCb25p17");
         const result = newSubnetToL1Conversion(subnetConversionID);
 
         expect(bufferToHex(result)).toBe("0x" +

@@ -1,19 +1,7 @@
 // FIXME: this is a quick hack solution untill AvalancheJS supports this
 // Please don't copy this code to other projects!
 import { sha256 } from '@noble/hashes/sha256';
-import { base58 } from '@scure/base';
 import { utils } from '@avalabs/avalanchejs';
-
-const CHECKSUM_LENGTH = 4;
-
-export function cb58ToBytes(cb58: string): Uint8Array {
-    const decodedBytes = base58.decode(cb58);
-    if (decodedBytes.length < CHECKSUM_LENGTH) {
-        throw new Error('Input string is smaller than the checksum size');
-    }
-
-    return decodedBytes.slice(0, -CHECKSUM_LENGTH);
-}
 
 
 export interface PackL1ConversionMessageArgs {
@@ -74,8 +62,8 @@ export function marshalSubnetToL1ConversionData(args: PackL1ConversionMessageArg
     const parts: Uint8Array[] = [];
 
     parts.push(encodeUint16(codecVersion));
-    parts.push(cb58ToBytes(args.subnetId));
-    parts.push(cb58ToBytes(args.managerChainID));
+    parts.push(utils.base58check.decode(args.subnetId));
+    parts.push(utils.base58check.decode(args.managerChainID));
     parts.push(encodeVarBytes(utils.hexToBuffer(args.managerAddress)));
     parts.push(encodeUint32(args.validators.length));
 
@@ -83,7 +71,7 @@ export function marshalSubnetToL1ConversionData(args: PackL1ConversionMessageArg
         if (!validator.nodeID || !validator.nodePOP) {
             throw new Error(`Invalid validator data: ${JSON.stringify(validator)}`);
         }
-        parts.push(encodeVarBytes(cb58ToBytes(validator.nodeID.split("-")[1])));
+        parts.push(encodeVarBytes(utils.base58check.decode(validator.nodeID.split("-")[1])));
         parts.push(utils.hexToBuffer(validator.nodePOP.publicKey));
         parts.push(encodeUint64(BootstrapValidatorWeight));
     }
@@ -133,7 +121,7 @@ export function newUnsignedMessage(networkID: number, sourceChainID: string, mes
     parts.push(encodeUint32(networkID));
 
     // Add sourceChainID
-    parts.push(cb58ToBytes(sourceChainID));
+    parts.push(utils.base58check.decode(sourceChainID));
 
     // Add message length and message
     parts.push(encodeUint32(message.length));
@@ -150,7 +138,7 @@ export function packL1ConversionMessage(args: PackL1ConversionMessageArgs, netwo
     const subnetConversionAddressedCall = newAddressedCall(new Uint8Array([]), addressedCallPayload)
 
     const unsignedMessage = newUnsignedMessage(networkID, sourceChainID, subnetConversionAddressedCall);
-    return [unsignedMessage, cb58ToBytes(args.subnetId)];
+    return [unsignedMessage, utils.base58check.decode(args.subnetId)];
 }
 
 export interface PChainOwner {
@@ -190,10 +178,10 @@ export function packRegisterL1ValidatorMessage(
     parts.push(encodeUint32(REGISTER_L1_VALIDATOR_MESSAGE_TYPE_ID));
 
     // Add subnetID
-    parts.push(cb58ToBytes(validationPeriod.subnetID));
+    parts.push(utils.base58check.decode(validationPeriod.subnetID));
 
     // Add nodeID
-    const nodeIDBytes = cb58ToBytes(validationPeriod.nodeID.split("-")[1]);
+    const nodeIDBytes = utils.base58check.decode(validationPeriod.nodeID.split("-")[1]);
     parts.push(encodeVarBytes(nodeIDBytes));
 
     // Add BLS public key

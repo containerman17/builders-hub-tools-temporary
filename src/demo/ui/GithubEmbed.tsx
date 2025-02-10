@@ -52,6 +52,7 @@ export function GithubEmbed({ filePath, user, repo, branch = "main", lang = "TS"
                 <SyntaxHighlighter
                     language="typescript"
                     style={vs}
+                    showLineNumbers={true}
                     customStyle={{
                         margin: 0,
                         padding: '1rem',
