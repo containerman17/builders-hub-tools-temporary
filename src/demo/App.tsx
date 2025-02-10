@@ -1,10 +1,10 @@
-import { GetPChainAddress } from '../examples/GetPChainAddress';
-import { Button } from '../examples/utils/Button';
+import { GetPChainAddress } from './examples/GetPChainAddress';
+import { Button } from './ui/Button';
 import { ErrorBoundary } from "react-error-boundary";
-import { ConnectWallet } from '../examples/utils/ConnectWallet';
-import { CreateSubnet } from '../examples/CreateSubnet';
-import { useExampleStore } from '../examples/utils/store';
-import { CreateChain } from '../examples/CreateChain';
+import { ConnectWallet } from './ui/ConnectWallet';
+import { CreateSubnet } from './examples/CreateSubnet';
+import { useExampleStore } from './utils/store';
+import { CreateChain } from './examples/CreateChain';
 
 const components = {
     getPChainAddress: {

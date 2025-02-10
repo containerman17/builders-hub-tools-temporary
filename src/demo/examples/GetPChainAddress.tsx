@@ -7,8 +7,8 @@ import { Buffer as BufferPolyfill } from "buffer";
 import { SigningKey } from 'ethers';
 import { useEffect } from "react";
 import { useErrorBoundary } from "react-error-boundary";
-import { Button } from "./utils/Button";
-import { useExampleStore } from "./utils/store";
+import { Button } from "../ui/Button";
+import { useExampleStore } from "../utils/store";
 
 export const GetPChainAddress = () => {
   const { showBoundary } = useErrorBoundary();

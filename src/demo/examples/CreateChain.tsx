@@ -1,12 +1,12 @@
 import { utils, Context } from "@avalabs/avalanchejs";
 import { pvm } from "@avalabs/avalanchejs";
 import { bytesToHex } from '@noble/hashes/utils';
-import { getRPCEndpoint } from "./utils/rpcEndpoint";
-import { initialState, useExampleStore } from "./utils/store";
-import { Button } from "./utils/Button";
+import { getRPCEndpoint } from "../utils/rpcEndpoint";
+import { initialState, useExampleStore } from "../utils/store";
+import { Button } from "../ui/Button";
 import { useErrorBoundary } from "react-error-boundary";
 import { useState } from "react";
-import { Input } from "./utils/Input";
+import { Input } from "../ui/Input";
 
 export const CreateChain = () => {
     const { showBoundary } = useErrorBoundary();

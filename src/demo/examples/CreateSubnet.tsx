@@ -1,11 +1,12 @@
 import { utils, Context } from "@avalabs/avalanchejs";
 import { pvm } from "@avalabs/avalanchejs";
 import { bytesToHex } from '@noble/hashes/utils';
-import { getRPCEndpoint } from "./utils/rpcEndpoint";
-import { useExampleStore } from "./utils/store";
-import { Button } from "./utils/Button";
+import { getRPCEndpoint } from "../utils/rpcEndpoint";
+import { useExampleStore } from "../utils/store";
+import { Button } from "../ui/Button";
 import { useErrorBoundary } from "react-error-boundary";
 import { useState } from "react";
+import { Input } from "../ui/Input";
 
 export const CreateSubnet = () => {
   const { showBoundary } = useErrorBoundary();
@@ -63,19 +64,19 @@ export const CreateSubnet = () => {
   return (
     <div className="space-y-4">
       <h2 className="text-lg font-semibold text-gray-800">Create Subnet</h2>
-      <div>
+      <div className="space-y-4">
+        <Input
+          label="Your P-Chain Address"
+          value={pChainAddress}
+          disabled={true}
+          type="text"
+        />
         <Button
           onClick={handleCreateSubnet}
           disabled={isCreating}
         >
           {isCreating ? 'Creating Subnet...' : 'Create Subnet'}
         </Button>
-      </div>
-      <div className="p-4 bg-gray-100 rounded-lg">
-        <p className="text-gray-700">
-          <span className="w-36 inline-block">P-Chain Address:</span>
-          <span className="font-mono break-all">{pChainAddress}</span>
-        </p>
       </div>
       {subnetID && (
         <div className="mt-4 p-4 bg-gray-100 rounded-lg">
