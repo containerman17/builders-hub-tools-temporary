@@ -22,7 +22,7 @@ export const initialState = {
     evmChainName: "My L1",
     evmChainRpcUrl: "",
     evmChainCoinName: "COIN",
-    poaValidatorManagerAddress: "",
+    validatorManagerAddress: "",
 }
 
 export const useExampleStore = create(
@@ -47,7 +47,7 @@ export const useExampleStore = create(
             setEvmChainName: (evmChainName: string) => set({ evmChainName }),
             setEvmChainRpcUrl: (evmChainRpcUrl: string) => set({ evmChainRpcUrl }),
             setEvmChainCoinName: (evmChainCoinName: string) => set({ evmChainCoinName }),
-            setPoaValidatorManagerAddress: (poaValidatorManagerAddress: string) => set({ poaValidatorManagerAddress }),
+            setValidatorManagerAddress: (validatorManagerAddress: string) => set({ validatorManagerAddress }),
             reset: () => set(initialState),
         })),
         {

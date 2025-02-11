@@ -10,6 +10,7 @@ import { RefreshCw } from 'lucide-react';
 import { DeployValidatorMessages } from './examples/ValidatorManager/DeployValidatorMessages';
 import { SwitchChain } from "./examples/Wallet/SwitchChain";
 import { DeployValidatorManager } from "./examples/ValidatorManager/DeployValidatorManager";
+import { ReadContract } from "./examples/ValidatorManager/ReadContract";
 
 const componentGroups = {
     "Wallet": [
@@ -65,6 +66,12 @@ const componentGroups = {
             component: DeployValidatorManager,
             fileNames: ["src/demo/examples/ValidatorManager/DeployValidatorManager.tsx"]
         },
+        {
+            id: "readContract",
+            label: "Read Contract",
+            component: ReadContract,
+            fileNames: ["src/demo/examples/ValidatorManager/ReadContract.tsx"]
+        }
     ],
     "Deploy PoS": [
 
