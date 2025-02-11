@@ -12,7 +12,8 @@ import { SwitchChain } from "./examples/Wallet/SwitchChain";
 import { DeployValidatorManager } from "./examples/ValidatorManager/DeployValidatorManager";
 import { ReadContract } from "./examples/ValidatorManager/ReadContract";
 import { UpgradeProxy } from "./examples/ValidatorManager/UpgradeProxy";
-
+import { Initialize } from "./examples/InitializePoA/Initialize";
+import { initializeValidatorSet } from "./examples/InitializePoA/initializeValidatorSet";
 const componentGroups = {
     "Wallet": [
         {
@@ -80,6 +81,20 @@ const componentGroups = {
             fileNames: ["src/demo/examples/ValidatorManager/UpgradeProxy.tsx"]
         }
     ],
+    "Initialize PoA": [
+        {
+            id: "initialize",
+            label: "Initialize",
+            component: Initialize,
+            fileNames: ["src/demo/examples/InitializePoA/Initialize.tsx"]
+        },
+        {
+            id: "initializeValidatorSet",
+            label: "Initialize Validator Set",
+            component: initializeValidatorSet,
+            fileNames: ["src/demo/examples/InitializePoA/initializeValidatorSet.tsx"]
+        }
+    ]
 };
 
 const ErrorFallback = ({ error, resetErrorBoundary }: { error: Error, resetErrorBoundary: () => void }) => {
