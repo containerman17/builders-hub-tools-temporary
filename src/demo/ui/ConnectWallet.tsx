@@ -105,13 +105,12 @@ export const ConnectWallet = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <div className={`space-y-4 transition`}>
-            <div className="bg-white border border-gray-200 shadow-sm rounded-lg p-3 flex items-center justify-between">
+            <div className="bg-white border border-gray-200 shadow-sm rounded-lg py-2 px-3 flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                     <div className="bg-blue-50 p-2 rounded-full">
                         <Wallet className="w-4 h-4 text-blue-600" />
                     </div>
                     <div>
-                        <div className="text-sm text-gray-500">Connected to</div>
                         <div className="font-mono text-gray-900">{address}</div>
                     </div>
                 </div>

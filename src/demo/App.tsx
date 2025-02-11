@@ -11,6 +11,7 @@ import { DeployValidatorMessages } from './examples/ValidatorManager/DeployValid
 import { SwitchChain } from "./examples/Wallet/SwitchChain";
 import { DeployValidatorManager } from "./examples/ValidatorManager/DeployValidatorManager";
 import { ReadContract } from "./examples/ValidatorManager/ReadContract";
+import { UpgradeProxy } from "./examples/ValidatorManager/UpgradeProxy";
 
 const componentGroups = {
     "Wallet": [
@@ -53,7 +54,7 @@ const componentGroups = {
             fileNames: ["src/demo/examples/L1/ConvertL1Signatures.tsx", "src/demo/examples/L1/convertWarp.ts"]
         }
     ],
-    "Deploy ValidatorManager": [
+    "ValidatorManager": [
         {
             id: "deployValidatorMessages",
             label: "Validator Messages Library",
@@ -71,15 +72,14 @@ const componentGroups = {
             label: "Read Contract",
             component: ReadContract,
             fileNames: ["src/demo/examples/ValidatorManager/ReadContract.tsx"]
+        },
+        {
+            id: "upgradeProxy",
+            label: "Upgrade Proxy",
+            component: UpgradeProxy,
+            fileNames: ["src/demo/examples/Proxy/UpgradeProxy.tsx"]
         }
     ],
-    "Deploy PoS": [
-
-    ],
-    "Top up a validator": [
-
-    ],
-
 };
 
 const ErrorFallback = ({ error, resetErrorBoundary }: { error: Error, resetErrorBoundary: () => void }) => {

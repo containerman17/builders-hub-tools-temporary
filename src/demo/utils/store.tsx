@@ -23,6 +23,8 @@ export const initialState = {
     evmChainRpcUrl: "",
     evmChainCoinName: "COIN",
     validatorManagerAddress: "",
+    proxyAddress: "0xfacade0000000000000000000000000000000000",
+    proxyAdminAddress: "0xdad0000000000000000000000000000000000000" as `0x${string}`,
 }
 
 export const useExampleStore = create(
@@ -48,6 +50,8 @@ export const useExampleStore = create(
             setEvmChainRpcUrl: (evmChainRpcUrl: string) => set({ evmChainRpcUrl }),
             setEvmChainCoinName: (evmChainCoinName: string) => set({ evmChainCoinName }),
             setValidatorManagerAddress: (validatorManagerAddress: string) => set({ validatorManagerAddress }),
+            setProxyAddress: (proxyAddress: string) => set({ proxyAddress }),
+            setProxyAdminAddress: (proxyAdminAddress: `0x${string}`) => set({ proxyAdminAddress }),
             reset: () => set(initialState),
         })),
         {
