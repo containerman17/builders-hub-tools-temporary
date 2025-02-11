@@ -20,7 +20,7 @@ export const Input = ({
     const inputClasses = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm disabled:bg-gray-100 disabled:cursor-not-allowed";
 
     return (
-        <div>
+        <div className="w-full">
             <label className="block mb-2 text-sm font-medium text-gray-700">
                 {label}
             </label>

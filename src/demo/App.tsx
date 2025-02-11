@@ -28,7 +28,7 @@ const componentGroups = {
             fileNames: ["src/demo/examples/Wallet/SwitchChain.tsx"]
         }
     ],
-    'Create an L1': [
+    'Create L1': [
         {
             id: 'createSubnet',
             label: "Create Subnet",
@@ -54,7 +54,7 @@ const componentGroups = {
             fileNames: ["src/demo/examples/L1/ConvertL1Signatures.tsx", "src/demo/examples/L1/convertWarp.ts"]
         }
     ],
-    "ValidatorManager": [
+    "Deploy ValidatorManager": [
         {
             id: "deployValidatorMessages",
             label: "Validator Messages Library",
@@ -77,7 +77,7 @@ const componentGroups = {
             id: "upgradeProxy",
             label: "Upgrade Proxy",
             component: UpgradeProxy,
-            fileNames: ["src/demo/examples/Proxy/UpgradeProxy.tsx"]
+            fileNames: ["src/demo/examples/ValidatorManager/UpgradeProxy.tsx"]
         }
     ],
 };
@@ -142,7 +142,7 @@ function App() {
                 <ul className="space-y-6">
                     {Object.entries(componentGroups).map(([groupName, components]) => (
                         <li key={groupName}>
-                            <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wide mb-3">{groupName}</h3>
+                            <h3 className="text-md font-semibold text-gray-800 mb-3 border-b border-gray-200 pb-1">{groupName}</h3>
                             <ul className="space-y-1">
                                 {components.map(({ id, label }) => (
                                     <li key={id}>
