@@ -15,7 +15,7 @@ export const Success = ({ label, value }: SuccessProps) => {
                 <Check className="h-5 w-5 text-green-500" />
             </div>
             <div className="bg-white p-3 rounded border border-gray-200">
-                <p className="font-mono text-sm break-all">{value}</p>
+                <p className="font-mono text-sm break-all whitespace-pre-wrap">{value}</p>
             </div>
         </div>
     );

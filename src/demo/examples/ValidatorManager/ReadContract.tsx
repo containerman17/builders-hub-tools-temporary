@@ -26,20 +26,19 @@ const serializeValue = (value: any): any => {
 
 export const ReadContract = () => {
     const { showBoundary } = useErrorBoundary();
-    const { validatorManagerAddress, proxyAddress } = useExampleStore();
+    const { validatorManagerAddress, setValidatorManagerAddress } = useExampleStore();
     const [viewData, setViewData] = useState<ViewData>({});
     const [isReading, setIsReading] = useState(false);
     const [eventLogs, setEventLogs] = useState<Record<string, any[]>>({});
-    const [readFromAddress, setReadFromAddress] = useState<string>(proxyAddress);
 
     async function readContractData() {
-        if (!readFromAddress) {
+        if (!validatorManagerAddress) {
             return;
         }
         setIsReading(true);
         setEventLogs({});
 
-        if (!readFromAddress || !window.avalanche) return;
+        if (!validatorManagerAddress || !window.avalanche) return;
 
         try {
             const publicClient = createPublicClient({
@@ -60,7 +59,7 @@ export const ReadContract = () => {
 
                 try {
                     const result = await publicClient.readContract({
-                        address: readFromAddress as `0x${string}`,
+                        address: validatorManagerAddress as `0x${string}`,
                         abi: [func],
                         functionName: func.name,
                     });
@@ -83,7 +82,7 @@ export const ReadContract = () => {
                 if (!event.name) continue;
                 try {
                     const eventLogs = await publicClient.getLogs({
-                        address: readFromAddress as `0x${string}`,
+                        address: validatorManagerAddress as `0x${string}`,
                         event: event as AbiEvent,
                         fromBlock: 0n,
                         toBlock: 'latest'
@@ -112,31 +111,14 @@ export const ReadContract = () => {
     return (
         <div className="space-y-8">
             <div className="space-y-4">
-                <h2 className="text-lg font-semibold text-gray-800">Select Contract to Read From</h2>
-                <div className="flex flex-wrap gap-4">
-                    <Button
-                        type="primary"
-                        onClick={() => setReadFromAddress(proxyAddress)}
-                    >
-                        Proxy
-                    </Button>
-                    <Button
-                        type="secondary"
-                        onClick={() => setReadFromAddress(validatorManagerAddress)}
-                    >
-                        Validator Manager
-                    </Button>
-                </div>
-            </div>
-            <div className="space-y-4">
                 <h2 className="text-lg font-semibold text-gray-800">Read Validator Manager Contract</h2>
                 <div className="flex gap-4 items-start mb-8">
                     <div className="flex-1">
                         <Input
-                            label="Read from address"
-                            value={readFromAddress || ""}
+                            label="Validator Manager Address"
+                            value={validatorManagerAddress || ""}
                             placeholder="0x..."
-                            onChange={(value) => setReadFromAddress(value)}
+                            onChange={(value) => setValidatorManagerAddress(value)}
                         />
                     </div>
                     <div className="pt-7">
